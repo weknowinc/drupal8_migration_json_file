@@ -1,7 +1,19 @@
 # Drupal 8 migration Json File
 
 Module to migrate content from Json file to nodes in Drupal 8.
-There is a [json file](./data/json.posts.json) with example data.
+
+The 'migrate_source_url' custom source plugin allows to read a json file from local environment,
+in 'urls' you can define the path to that file:
+
+```
+source:
+  plugin: migrate_source_url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls: data/json/posts.json
+```
+
+Note: There is a [json file](data/json.posts.json) with example data.
 
 # Instructions:
 
