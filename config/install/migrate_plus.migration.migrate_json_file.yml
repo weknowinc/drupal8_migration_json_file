@@ -1,0 +1,85 @@
+id: migrate_json_file
+label: Migrate content from Json file.
+source:
+  plugin: migrate_source_url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls: data/json/posts.json
+
+  ids:
+    alias:
+      type: string
+  item_selector: /posts
+
+  fields:
+    -
+      name: title
+      label: 'Title'
+      selector: title
+    -
+      name: body
+      label: 'Body'
+      selector: body
+    -
+      name: tags
+      label: 'Tags'
+      selector: tags
+    -
+      name: draft
+      label: 'Draft'
+      selector: draft
+    -
+      name: status
+      label: 'Status'
+      selector: status
+    -
+      name: categories
+      label: 'Categories'
+      selector: categories
+    -
+      name: published
+      label: 'Published Date'
+      selector: published
+    -
+      name: alias
+      label: 'URL Alias'
+      selector: path
+process:
+  # In D6, nodes always have a tnid, but it's zero for untranslated nodes.
+  # We normalize it to equal the nid in that case.
+  # @see \Drupal\node\Plugin\migrate\source\d6\Node::prepareRow().
+  # If you are using this file to build a custom migration consider removing
+  # the nid and vid fields to allow incremental migrations.
+  # nid: tnid
+  # vid: vid
+  langcode:
+    plugin: default_value
+    default_value: "und"
+  title: title
+  type:
+    plugin: default_value
+    default_value: article
+  uid:
+    plugin: default_value
+    default_value: 1
+  status: status
+  'body/value': body
+  'body/format':
+    plugin: default_value
+    default_value: full_html
+  created: published
+  field_tags:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: tags
+    -
+      plugin: migrate_json_file_get_term
+      vocabulary: tags
+    -
+      plugin: iterator
+      process:
+        target_id: target_id
+  'path/alias': alias
+destination:
+  plugin: entity:node

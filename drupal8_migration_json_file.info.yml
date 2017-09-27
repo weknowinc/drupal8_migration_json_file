@@ -1,0 +1,9 @@
+name: "drupal8_migration_json_file"
+type: module
+description: Migrate content from Json file.
+core: 8.x
+package: Custom
+dependencies:
+  - migrate_plus
+  - migrate_tools
+  - migrate_drupal
