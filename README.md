@@ -1,6 +1,7 @@
 # Drupal 8 migration Json File
 
 Module to migrate content from Json file to nodes in Drupal 8.
+There is a [json file](./data/json.posts.json) with example data.
 
 # Instructions:
 
