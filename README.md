@@ -13,7 +13,7 @@ source:
   urls: data/json/posts.json
 ```
 
-Note: There is a [json file](data/json.posts.json) with example data.
+Note: There is a [json file](data/json/posts.json) with example data.
 
 # Instructions:
 
